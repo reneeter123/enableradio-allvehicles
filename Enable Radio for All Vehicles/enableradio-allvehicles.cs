@@ -1,4 +1,5 @@
 ﻿using GTA;
+using GTA.Native;
 using System;
 
 namespace Enable_Radio_for_All_Vehicles
@@ -12,6 +13,14 @@ namespace Enable_Radio_for_All_Vehicles
 
         private void OnTick(object sender, EventArgs e)
         {
+            if (Game.Player.Character.IsInVehicle())
+            {
+                Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, true);
+            }
+            else
+            {
+                Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, false);
+            }
         }
     }
 }
