@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Enable_Radio_for_All_Vehicles</RootNamespace>
-    <AssemblyName>Enable Radio for All Vehicles</AssemblyName>
+    <AssemblyName>enableradio-allvehicles</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
