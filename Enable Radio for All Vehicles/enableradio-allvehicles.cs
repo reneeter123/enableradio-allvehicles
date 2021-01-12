@@ -15,7 +15,9 @@ namespace Enable_Radio_for_All_Vehicles
         {
             if (Game.Player.Character.IsInVehicle())
             {
+                var prevRadio = Game.RadioStation;
                 Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, true);
+                Game.RadioStation = prevRadio;
             }
             else
             {
