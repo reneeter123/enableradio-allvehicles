@@ -13,7 +13,7 @@ namespace Enable_Radio_for_All_Vehicles
 
         private void OnTick(object sender, EventArgs e)
         {
-            if (Game.Player.Character.IsInVehicle())
+            if (Game.Player.Character.IsInVehicle() && !Game.Player.IsDead)
             {
                 var prevRadio = Game.RadioStation;
                 Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, true);
