@@ -44,4 +44,7 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)enableradio-allvehicles.ini" "$(TargetDir)" /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
