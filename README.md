@@ -1,3 +1,3 @@
 # Enable Radio for All Vehicles
 
-Grand Theft Auto V's enable radio for all vehicles mod.
+Enables all vehicles to listen to the radio.
