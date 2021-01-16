@@ -37,20 +37,20 @@ namespace Enable_Radio_for_All_Vehicles
             var isEnable = true;
             var isEngineRunning = currentVehicle.IsEngineRunning;
 
-            var currentClass = currentVehicle.ClassType;
-            var isDisableClass = disableClasses.Contains(currentClass);
+            var isDisableClass = disableClasses.Contains(
+                currentVehicle.ClassType);
 
-            var currentHash = (VehicleHash)Game.GenerateHash(currentVehicle.DisplayName);
-            var isDisbaleHash = disableHashes.Contains(currentHash);
+            var isDisbaleHash = disableHashes.Contains(
+                (VehicleHash)Game.GenerateHash(currentVehicle.DisplayName));
 
             if (isDisableClass || isDisbaleHash) isEnable = false;
 
             // Turn on/off the radio
             if (isLive && isEnable && isEngineRunning)
             {
-                var prevRadio = Game.RadioStation;
+                var prevRadioStation = Game.RadioStation;
                 Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, true);
-                Game.RadioStation = prevRadio;
+                Game.RadioStation = prevRadioStation;
             }
             else
             {
@@ -61,61 +61,19 @@ namespace Enable_Radio_for_All_Vehicles
         private void GetSettings()
         {
             // Get the ini configuration
-            var settingsIni = ScriptSettings.Load(@"scripts\enableradio-allvehicles.ini");
+            var ini = ScriptSettings.Load(@"scripts\enableradio-allvehicles.ini");
 
-            var origDisableClasses = settingsIni.GetValue<string>("Settings", "DisableClasses", "");
-            var origDisableHashes = settingsIni.GetValue<string>("Settings", "DisableHashes", "");
-
-            // If no value can be obtained, exit
-            var isNullOrEmptyClass = string.IsNullOrEmpty(origDisableClasses);
-            var isNullOrEmptyHash = string.IsNullOrEmpty(origDisableHashes);
-
-            if (isNullOrEmptyClass || isNullOrEmptyHash) return;
+            var classes = ini.GetValue<string>("Settings", "DisableClasses", "")
+                .Split(new[] { ", " }, StringSplitOptions.None);
+            var hashes = ini.GetValue<string>("Settings", "DisableHashes", "")
+                .Split(new[] { ", " }, StringSplitOptions.None);
 
             // Cut out the value and add it to the list
-            var oDCSepIndex = origDisableClasses.LastIndexOf(", ");
-            var oDHSepIndex = origDisableHashes.LastIndexOf(", ");
+            foreach (var value in classes)
+                if (Enum.TryParse(value, out VehicleClass addClass)) disableClasses.Add(addClass);
 
-            while (oDCSepIndex != -1)
-            {
-                var disableClassString = origDisableClasses.Substring(oDCSepIndex + 2);
-                VehicleClass addClass;
-                var isClassParsed = Enum.TryParse(disableClassString, out addClass);
-                if (isClassParsed)
-                {
-                    disableClasses.Add(addClass);
-                }
-                origDisableClasses = origDisableClasses.Remove(oDCSepIndex);
-
-                oDCSepIndex = origDisableClasses.LastIndexOf(", ");
-            }
-
-            while (oDHSepIndex != -1)
-            {
-                var disableHashString = origDisableHashes.Substring(oDHSepIndex + 2);
-                VehicleHash addHash;
-                var isHashParsed = Enum.TryParse(disableHashString, out addHash);
-                if (isHashParsed)
-                {
-                    disableHashes.Add(addHash);
-                }
-                origDisableHashes = origDisableHashes.Remove(oDHSepIndex);
-
-                oDHSepIndex = origDisableHashes.LastIndexOf(", ");
-            }
-
-            VehicleClass _addClass;
-            var _isClassParsed = Enum.TryParse(origDisableClasses, out _addClass);
-            if (_isClassParsed)
-            {
-                disableClasses.Add(_addClass);
-            }
-            VehicleHash _addHash;
-            var _isHashParsed = Enum.TryParse(origDisableHashes, out _addHash);
-            if (_isHashParsed)
-            {
-                disableHashes.Add(_addHash);
-            }
+            foreach (var value in hashes)
+                if (Enum.TryParse(value, out VehicleHash addHash)) disableHashes.Add(addHash);
         }
     }
 }
