@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 制御されます。アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("Enable Radio for All Vehicles")]
-[assembly: AssemblyDescription("Grand Theft Auto V's enable radio for all vehicles mod.")]
+[assembly: AssemblyDescription("Enables all vehicles to listen to the radio.")]
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Enable Radio for All Vehicles")]
