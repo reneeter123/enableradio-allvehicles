@@ -21,6 +21,7 @@ namespace Enable_Radio_for_All_Vehicles
 
         private void OnTick(object sender, EventArgs e)
         {
+            // Check the conditions of the conditional branch
             var currentVehicle = Game.Player.Character.CurrentVehicle;
 
             if (currentVehicle == null)
@@ -31,15 +32,12 @@ namespace Enable_Radio_for_All_Vehicles
 
             currentVehicle.IsRadioEnabled = false;
 
-            // Check the conditions of the conditional branch
             var isEnable = true;
             var isEngineRunning = currentVehicle.IsEngineRunning;
 
-            var isDisableClass = disableClasses.Contains(
-                currentVehicle.ClassType);
+            var isDisableClass = disableClasses.Contains(currentVehicle.ClassType);
 
-            var isDisbaleHash = disableHashes.Contains(
-                (VehicleHash)Game.GenerateHash(currentVehicle.DisplayName));
+            var isDisbaleHash = disableHashes.Contains((VehicleHash)Game.GenerateHash(currentVehicle.DisplayName));
 
             if (isDisableClass || isDisbaleHash) isEnable = false;
 
@@ -61,10 +59,8 @@ namespace Enable_Radio_for_All_Vehicles
             // Get the ini configuration
             var ini = ScriptSettings.Load(@"scripts\enableradio-allvehicles.ini");
 
-            var classes = ini.GetValue<string>("Settings", "DisableClasses", "")
-                .Split(new[] { ", " }, StringSplitOptions.None);
-            var hashes = ini.GetValue<string>("Settings", "DisableHashes", "")
-                .Split(new[] { ", " }, StringSplitOptions.None);
+            var classes = ini.GetValue<string>("Settings", "DisableClasses", "").Split(',');
+            var hashes = ini.GetValue<string>("Settings", "DisableHashes", "").Split(',');
 
             // Cut out the value and add it to the list
             foreach (var value in classes)
