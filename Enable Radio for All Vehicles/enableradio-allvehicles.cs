@@ -21,8 +21,7 @@ namespace Enable_Radio_for_All_Vehicles
 
         private void OnTick(object sender, EventArgs e)
         {
-            var player = Game.Player;
-            var currentVehicle = player.Character.CurrentVehicle;
+            var currentVehicle = Game.Player.Character.CurrentVehicle;
 
             if (currentVehicle == null)
             {
@@ -33,7 +32,6 @@ namespace Enable_Radio_for_All_Vehicles
             currentVehicle.IsRadioEnabled = false;
 
             // Check the conditions of the conditional branch
-            var isLive = !player.IsDead;
             var isEnable = true;
             var isEngineRunning = currentVehicle.IsEngineRunning;
 
@@ -46,7 +44,7 @@ namespace Enable_Radio_for_All_Vehicles
             if (isDisableClass || isDisbaleHash) isEnable = false;
 
             // Turn on/off the radio
-            if (isLive && isEnable && isEngineRunning)
+            if (isEnable && isEngineRunning)
             {
                 var prevRadioStation = Game.RadioStation;
                 Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, true);
